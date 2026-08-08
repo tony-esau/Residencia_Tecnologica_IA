@@ -14,14 +14,14 @@ O conteúdo tem origem no roteiro de estudos da disciplina "Realidade de Empresa
 
 ## Sobre o tema
 
-A ideia central é enxergar a I.A. não como uma tecnologia isolada, mas como um negócio inteiro que precisa se sustentar. Isso envolve entender o mercado (principalmente a lógica B2B), os desafios reais de adoção dentro das empresas, os papéis e times que fazem uma solução de IA existir, os modelos de negócio possíveis e o processo prático de transformar uma ideia em proposta, produto e entrega.
+A ideia central é enxergar a I.A. não como uma tecnologia isolada, mas como um negócio inteiro que precisa se sustentar. Isso envolve entender o mercado (principalmente a lógica B2B), os desafios reais de adoção dentro das empresas, os papéis e times que fazem uma solução de I.A. existir, os modelos de negócio possíveis e o processo prático de transformar uma ideia em proposta, produto e entrega.
 
 ## Tópicos cobertos
 
-1. **Introdução à IA aplicada a empresas (B2B)**, mercado, ecossistema, oportunidades e a lógica de negócios entre empresas.
-2. **Desafios em implementar IA nas empresas**, percepção dos gestores, maturidade, estratégias de adoção e casos de sucesso.
-3. **Como funciona uma empresa produtora de IA**, o time típico, as responsabilidades de negócio, técnicas e de produto, e os processos de desenvolvimento.
-4. **Modelos de negócios para projetos de IA**, formas de cobrança, construção de soluções sob medida, proposta técnico-comercial e cálculo de esforço.
+1. **Introdução à I.A. aplicada a empresas (B2B)**, mercado, ecossistema, oportunidades e a lógica de negócios entre empresas.
+2. **Desafios em implementar I.A. nas empresas**, percepção dos gestores, maturidade, estratégias de adoção e casos de sucesso.
+3. **Como funciona uma empresa produtora de I.A.**, o time típico, as responsabilidades de negócio, técnicas e de produto, e os processos de desenvolvimento.
+4. **Modelos de negócios para projetos de I.A.**, formas de cobrança, construção de soluções sob medida, proposta técnico-comercial e cálculo de esforço.
 5. **Dinâmica prática**, construir do zero ao repositório uma proposta técnico-comercial completa.
 
 ## Padrões de desenvolvimento e boas práticas
@@ -32,7 +32,7 @@ Uma seleção de referências. São materiais que valem como leitura de fundo pa
 
 Bibliografia utilizada na construção do material de estudo:
 
-- AIBRASIL. "Guia de Ferramentas de IA". AI Brasil (LinkedIn), 2026.
+- AIBRASIL. "Guia de Ferramentas de I.A.". AI Brasil (LinkedIn), 2026.
 - ALBUQUERQUE, Flávia. "Brasil está entre os países que mais usam inteligência artificial". Agência Brasil, 2025.
 - ANTHROPIC, C. "Labor market impacts of AI: A new measure and early evidence". Anthropic, 2026.
 - CHUNG, Wan Ming. "As 4 dimensões e os 16 indicadores que mostram se a sua IA realmente entrega valor". Pulsar WCA Newsletter (LinkedIn), 2026.
