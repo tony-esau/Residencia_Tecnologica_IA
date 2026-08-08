@@ -1,0 +1,207 @@
+% !TEX program = xelatex
+% Referências — Realidade de Empresas Produtoras de Soluções de IA
+% Mesmo tema do roteiro (preto e verde). Compilar com XeLaTeX.
+\documentclass[11pt]{article}
+
+% ---------- Fontes ----------
+\usepackage{fontspec}
+\setmainfont{Latin Modern Sans}
+\newfontfamily\displayfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+% ---------- Layout ----------
+\usepackage[a4paper,top=1.6cm,bottom=1.8cm,left=2.4cm,right=2.4cm]{geometry}
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{ragged2e}
+\usepackage{needspace}
+\usepackage{enumitem}
+
+% ---------- Cores ----------
+\usepackage{xcolor}
+\definecolor{bg}{HTML}{0B0F0D}
+\definecolor{panel}{HTML}{141B18}
+\definecolor{panelHi}{HTML}{1B2521}
+\definecolor{accent}{HTML}{33E086}
+\definecolor{accentDeep}{HTML}{0F5A3A}
+\definecolor{accentDim}{HTML}{1E8F5E}
+\definecolor{textcol}{HTML}{E8F0EC}
+\definecolor{muted}{HTML}{93A79D}
+\definecolor{line}{HTML}{27362F}
+\usepackage{pagecolor}
+\pagecolor{bg}
+
+% ---------- Caixas ----------
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+
+% ---------- Rodapé ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{muted}%
+  Realidade de Empresas Produtoras de Soluções de IA\quad\textcolor{line}{\textbar}\quad
+  \textcolor{accent}{\thepage}}
+
+% ---------- Links ----------
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent,
+  breaklinks=true,
+  pdftitle={Referências — Realidade de Empresas Produtoras de Soluções de IA},
+  pdfauthor={Tony Esaú de Oliveira}
+}
+\usepackage{xurl} % quebra URLs longas em qualquer ponto
+
+% ---------- Marcador de lista ----------
+\newcommand{\sqbul}{\textcolor{accent}{\raisebox{0.12ex}{\rule{0.42em}{0.42em}}}}
+\setlist[enumerate,1]{leftmargin=1.7em,itemsep=3pt,topsep=2pt,parsep=0pt,
+  label=\textcolor{accent}{\bfseries\arabic*.}}
+
+% ---------- Macros do documento ----------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% Cabeçalho de seção temática
+\newcommand{\refsec}[1]{%
+  \par\needspace{3.5\baselineskip}\vspace{16pt}%
+  {\displayfont\Large\bfseries\color{accent}#1}\par\vspace{3pt}%
+  {\color{line}\rule{\linewidth}{0.6pt}}\par\vspace{6pt}}
+
+% Uma referência: citação + anotação curta
+% #1 = citação completa   #2 = anotação
+\newcommand{\refitem}[2]{%
+  \par\needspace{2.5\baselineskip}\hangindent=1.4em\hangafter=1 #1\par
+  \nobreak{\color{muted}\itshape #2}\par\vspace{11pt}}
+
+\begin{document}
+\color{textcol}
+\tolerance=2400
+\emergencystretch=2.2em
+\sloppy
+
+% =====================================================
+% CAPA
+% =====================================================
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.4cm}
+
+\vspace{0.9cm}
+
+{\displayfont\Large\bfseries\color{accent}\addfontfeatures{LetterSpace=8.0}MATERIAL DE APOIO}
+
+\vspace{0.7cm}
+
+{\color{line}\rule{0.75\linewidth}{0.8pt}}
+
+\vspace{0.7cm}
+
+{\displayfont\fontsize{40}{46}\selectfont\bfseries\color{textcol}Referências}
+
+\vspace{0.5cm}
+
+{\displayfont\Large\color{accent}Realidade de Empresas Produtoras de Soluções de IA}
+
+\vspace{0.7cm}
+
+{\color{line}\rule{0.75\linewidth}{0.8pt}}
+
+\vspace{1.0cm}
+
+\begin{tcolorbox}[enhanced,width=0.9\linewidth,colback=panel,colframe=line,
+  boxrule=0.8pt,arc=4pt,left=18pt,right=18pt,top=14pt,bottom=14pt,
+  borderline west={3pt}{0pt}{accent}]
+  {\bfseries\color{accent}Organização por Tema}\par
+  \vspace{6pt}
+  \color{textcol}
+  \begin{enumerate}[leftmargin=1.7em,itemsep=3.5pt,topsep=2pt]
+    \item Fundamentos e economia da IA nos negócios;
+    \item Processo e metodologia de Machine Learning;
+    \item Engenharia de sistemas de ML e MLOps;
+    \item Produto e experiência de IA;
+    \item Estratégia, adoção e ROI nas empresas;
+    \item Governança, ética e risco.
+  \end{enumerate}
+\end{tcolorbox}
+
+\vfill
+{\footnotesize\color{muted}Material de estudo \textcolor{line}{\textbar}\ Residência em Software \textcolor{line}{\textbar}\ PPI Softex/SiDi}
+\vspace{0.6cm}
+\end{center}
+
+\clearpage
+
+% =====================================================
+% CORPO
+% =====================================================
+Este documento reúne uma seleção de referências de apoio ao estudo sobre a realidade das empresas produtoras de soluções de Inteligência Artificial, organizadas por tema. A seleção combina livros de referência, artigos seminais, frameworks oficiais e relatórios do setor. Cada item traz uma anotação curta indicando o que a fonte oferece e por que é útil.
+
+\refsec{1.\; Fundamentos e economia da IA nos negócios}
+
+\refitem{AGRAWAL, Ajay; GANS, Joshua; GOLDFARB, Avi. \textbf{``Prediction Machines: The Simple Economics of Artificial Intelligence''}. Harvard Business Review Press, 2018 (edição revista e ampliada, 2022).}{Enquadra a IA como uma queda no custo da previsão e mostra como isso muda decisões, fluxos de trabalho e modelos de negócio. Boa porta de entrada para pensar onde a IA gera valor econômico.}
+
+\refitem{IANSITI, Marco; LAKHANI, Karim R. \textbf{``Competing in the Age of AI: Strategy and Leadership When Algorithms and Networks Run the World''}. Harvard Business Review Press, 2020.}{Descreve o modelo operacional das empresas centradas em IA, em que dados e algoritmos, e não apenas pessoas, ficam no núcleo da entrega de valor, com efeitos de escala e escopo.}
+
+\refitem{DAUGHERTY, Paul R.; WILSON, H. James. \textbf{``Human + Machine: Reimagining Work in the Age of AI''}. Harvard Business Review Press, 2018.}{Foca na colaboração entre pessoas e máquinas e no redesenho de processos, apresentando os novos papéis que surgem quando a IA entra no fluxo de trabalho.}
+
+\refitem{FONTANA, Ash. \textbf{``The AI-First Company: How to Compete and Win with Artificial Intelligence''}. Portfolio / Penguin, 2021.}{Guia prático de como construir e escalar uma empresa orientada a dados e IA, incluindo ciclos de dados, vantagens competitivas defensáveis e etapas de maturidade.}
+
+\refsec{2.\; Processo e metodologia de Machine Learning}
+
+\refitem{STUDER, S.; BUI, T. B.; DRESCHER, C.; HANUSCHKIN, A.; WINKLER, L.; PETERS, S.; MÜLLER, K.-R. \textbf{``Towards CRISP-ML(Q): A Machine Learning Process Model with Quality Assurance Methodology''}. Machine Learning and Knowledge Extraction, v. 3, n. 2, p. 392--413, 2021. DOI: \url{https://doi.org/10.3390/make3020020}.}{Modelo de processo em seis fases, da definição de escopo à manutenção em produção, estendendo o CRISP-DM com garantia de qualidade e gestão de riscos específica de ML.}
+
+\refitem{ML-OPS.ORG. \textbf{``CRISP-ML(Q): The ML Lifecycle Process''}. Disponível em: \url{https://ml-ops.org/content/crisp-ml}.}{Versão prática e resumida do CRISP-ML(Q) em formato web, boa para consulta rápida das fases e das tarefas de qualidade em cada etapa do ciclo de vida.}
+
+\refitem{SCULLEY, D.; HOLT, G.; GOLOVIN, D.; DAVYDOV, E.; PHILLIPS, T.; EBNER, D.; CHAUDHARY, V.; YOUNG, M.; CRESPO, J.-F.; DENNISON, D. \textbf{``Hidden Technical Debt in Machine Learning Systems''}. Advances in Neural Information Processing Systems (NeurIPS), v. 28, p. 2503--2511, 2015.}{Artigo seminal que mostra por que sistemas de ML acumulam custo de manutenção oculto, com anti-padrões como emaranhamento, dependências de dados e laços de realimentação escondidos.}
+
+\refitem{SATO, Danilo; WIDER, Arif; WINDHEUSER, Christoph. \textbf{``Continuous Delivery for Machine Learning''}. martinfowler.com, 2019. Disponível em: \url{https://martinfowler.com/articles/cd4ml.html}.}{Explica como aplicar entrega contínua a ML, versionando dados, modelos e código e automatizando o pipeline do treino ao deploy, com um exemplo de ponta a ponta.}
+
+\refsec{3.\; Engenharia de sistemas de ML e MLOps}
+
+\refitem{HUYEN, Chip. \textbf{``Designing Machine Learning Systems: An Iterative Process for Production-Ready Applications''}. O'Reilly Media, 2022.}{Referência sobre projetar sistemas de ML de ponta a ponta para produção, cobrindo dados, features, treino, avaliação, deploy e monitoramento, com foco em decisões de engenharia.}
+
+\refitem{HUYEN, Chip. \textbf{``AI Engineering: Building Applications with Foundation Models''}. O'Reilly Media, 2025.}{Complementa o livro anterior com foco em construir aplicações sobre foundation models e LLMs, cobrindo avaliação, prompt engineering, RAG, fine-tuning, agentes e otimização de inferência.}
+
+\refitem{LAKSHMANAN, Valliappa; ROBINSON, Sara; MUNN, Michael. \textbf{``Machine Learning Design Patterns''}. O'Reilly Media, 2020.}{Catálogo de padrões recorrentes para preparação de dados, representação de features, treino, serving e reprodutibilidade, útil para resolver problemas comuns sem reinventar a roda.}
+
+\refitem{ZINKEVICH, Martin. \textbf{``Rules of Machine Learning: Best Practices for ML Engineering''}. Google. Disponível em: \url{https://developers.google.com/machine-learning/guides/rules-of-ml}.}{Conjunto de regras práticas de engenharia de ML escritas a partir da experiência do Google em operar modelos em escala, com forte ênfase em simplicidade e em dados antes de sofisticação.}
+
+\refitem{GOOGLE CLOUD. \textbf{``MLOps: Continuous Delivery and Automation Pipelines in Machine Learning''}. Disponível em: \url{https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning}.}{Documento de arquitetura que descreve níveis de maturidade de MLOps e como montar CI/CD, treino contínuo e monitoramento de modelos em produção.}
+
+\refitem{MOHANDAS, Goku. \textbf{``Made With ML''}. Disponível em: \url{https://madewithml.com}.}{Curso aberto e prático que conecta boas práticas de engenharia de software com MLOps, do design e teste ao deploy e à operação de aplicações de ML.}
+
+\refsec{4.\; Produto e experiência de IA}
+
+\refitem{GOOGLE PAIR. \textbf{``People + AI Guidebook''}. Google, 2019. Disponível em: \url{https://pair.withgoogle.com/guidebook}.}{Guia com boas práticas para desenhar produtos de IA centrados no usuário, cobrindo definição de necessidades, confiança, explicabilidade, tratamento de erros e feedback.}
+
+\refitem{AMERSHI, Saleema \textit{et al}. \textbf{``Guidelines for Human-AI Interaction''}. Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems. DOI: \url{https://doi.org/10.1145/3290605.3300233}. Ferramentas em: \url{https://www.microsoft.com/en-us/haxtoolkit/}.}{Conjunto de 18 diretrizes validadas para a interação entre pessoas e sistemas de IA, com padrões de design e exemplos reunidos no HAX Toolkit da Microsoft.}
+
+\refsec{5.\; Estratégia, adoção e ROI nas empresas}
+
+\refitem{PEREIRA, Elisa; GRAYLIN, Alvin Wang; BRYNJOLFSSON, Erik. \textbf{``The Enterprise AI Playbook: Lessons from 51 Successful Deployments''}. Stanford Digital Economy Lab, Stanford University, 2026. Disponível em: \url{https://digitaleconomy.stanford.edu}.}{Reúne lições de 51 implantações reais de IA em empresas, mostrando que o sucesso depende menos da tecnologia e mais de redesenho de processos, patrocínio executivo e governança.}
+
+\refitem{MCKINSEY \& COMPANY (QuantumBlack). \textbf{``The State of AI''}. 2025. Disponível em: \url{https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai}.}{Pesquisa anual sobre adoção de IA nas empresas, mostrando onde o valor aparece, quanto poucas organizações capturam retorno significativo e o que as diferencia.}
+
+\refitem{STANFORD HAI. \textbf{``The AI Index Report 2025''}. Stanford Institute for Human-Centered AI, 2025. Disponível em: \url{https://hai.stanford.edu/ai-index/2025-ai-index-report}.}{Relatório anual que agrega dados sobre pesquisa, economia, adoção, política e riscos de IA. Fonte confiável de números atualizados para fundamentar argumentos.}
+
+\refitem{VANIUKOV, Slava. \textbf{``How to Measure ROI from AI Projects: KPIs, Frameworks \& Templates''}. Softermii, 2026. Disponível em: \url{https://softermii.com/blog/artificial-intelligence/how-to-measure-roi-from-ai-projects-kpis-frameworks-and-templates}.}{Explica a fórmula de ROI adaptada a projetos de IA, as categorias de valor (custo, receita e risco), KPIs financeiros e operacionais e traz templates prontos de cálculo.}
+
+\refitem{WORKLYTICS. \textbf{``Proving ROI on AI Adoption: Metrics and Dashboards''}. Worklytics, 2025. Disponível em: \url{https://www.worklytics.co/resources/proving-roi-ai-adoption-metrics-dashboards-2025}.}{Foca em métricas e dashboards para provar o retorno da adoção de IA, com ênfase em medir uso, produtividade e impacto ao longo do tempo.}
+
+\refitem{AGILITY AT SCALE. \textbf{``AI Business Impact Metrics''}. Disponível em: \url{https://agility-at-scale.com/ai/strategy/ai-business-impact-metrics/}.}{Apresenta um conjunto de métricas de impacto de negócio para estratégia de IA, ajudando a ligar iniciativas técnicas a resultados mensuráveis para a organização.}
+
+\refsec{6.\; Governança, ética e risco}
+
+\refitem{NIST. \textbf{``Artificial Intelligence Risk Management Framework (AI RMF 1.0)''}. National Institute of Standards and Technology, 2023. Disponível em: \url{https://www.nist.gov/itl/ai-risk-management-framework}.}{Framework voluntário organizado em quatro funções, Governar, Mapear, Medir e Gerenciar, para tratar riscos de sistemas de IA ao longo de todo o ciclo de vida.}
+
+\refitem{ISO/IEC. \textbf{``ISO/IEC 42001:2023: Sistema de Gestão de Inteligência Artificial''}. International Organization for Standardization, 2023. Disponível em: \url{https://www.iso.org/standard/42001}.}{Primeira norma internacional de sistema de gestão de IA. Define requisitos para desenvolver, fornecer e usar IA de forma responsável, auditável e passível de certificação.}
+
+\refitem{PARLAMENTO EUROPEU; CONSELHO DA UNIÃO EUROPEIA. \textbf{``Regulamento (UE) 2024/1689 (AI Act)''}. 2024. Disponível em: \url{https://artificialintelligenceact.eu}.}{Primeiro marco regulatório abrangente de IA, com abordagem baseada em risco que classifica os sistemas e impõe obrigações proporcionais ao nível de risco de cada um.}
+
+\refitem{OCDE. \textbf{``OECD AI Principles''}. Organização para a Cooperação e Desenvolvimento Econômico, 2019 (atualizados em 2024). Disponível em: \url{https://oecd.ai/en/ai-principles}.}{Princípios intergovernamentais para uma IA confiável, que servem de base para diversas políticas e regulações de IA adotadas no mundo.}
+
+\end{document}
