@@ -1,15 +1,16 @@
 # Realidade de Empresas Produtoras de Soluções de I.A.
 
-Este subdiretório reúne o material de estudo sobre a **realidade das empresas que produzem soluções de Inteligência Artificial**, junto com uma curadoria de padrões de desenvolvimento, boas práticas, artigos e links úteis para quem quer entender como uma empresa de IA funciona por dentro, do primeiro contato comercial até a operação do modelo em produção.
+Este subdiretório reúne o material de estudo sobre a **realidade das empresas que produzem soluções de Inteligência Artificial**, junto com uma curadoria de padrões de desenvolvimento, boas práticas, artigos e links úteis para quem quer entender como uma empresa de I.A. funciona por dentro, do primeiro contato comercial até a operação do modelo em produção.
 
-O conteúdo tem origem no roteiro de estudos da disciplina "Realidade de Empresas Produtoras de Soluções de IA" (Residência em I.A., PPI Softex/SiDi), e foi organizado aqui de forma que sirva também como ponto de partida para consulta futura.
+O conteúdo tem origem no roteiro de estudos da disciplina "Realidade de Empresas Produtoras de Soluções de I.A." (Residência em I.A., PPI Softex/SiDi), e foi organizado aqui de forma que sirva também como ponto de partida para consulta futura.
 
 > Este é um dos subdiretórios do repositório. Para a visão geral e o índice completo, veja o [README da raiz](../README.md).
 
 ## Conteúdo desta pasta
 
-- `Roteiro_Estudos_Realidade_Empresas_IA.pdf`, o roteiro de estudos completo, com tema, figuras e referências.
-- `fonte/`, os arquivos LaTeX que geram o PDF (código-fonte editável).
+- `Roteiro_Estudos_Realidade_Empresas_IA.pdf`, o roteiro de estudos completo, com tema, figuras e referências;
+- `fonte/`, os arquivos LaTeX que geram o PDF (código-fonte editável);
+- `Referencias.pdf`, um arquivo pdf com ótimas referências sobre o assunto do roteiro e relacionados;
 - `README.md`, este arquivo, que serve de índice e de curadoria de leituras.
 
 ## Sobre o tema
