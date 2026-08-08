@@ -1,0 +1,817 @@
+% !TEX program = xelatex
+% Anatomia da Proposta Técnico-Comercial para Soluções de IA/ML
+% Documento de referência (guia), mesmo tema do roteiro. Compilar com XeLaTeX.
+\documentclass[11pt]{article}
+
+% ---------- Fontes ----------
+\usepackage{fontspec}
+% Latin Modern Sans (sem serifa), já vem em qualquer distribuição.
+% Para hifenização PT-BR ao compilar localmente, descomente a linha abaixo:
+% \usepackage[brazilian]{babel}
+\setmainfont{Latin Modern Sans}
+\newfontfamily\displayfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+% ---------- Layout ----------
+\usepackage[a4paper,top=1.6cm,bottom=1.8cm,left=2.3cm,right=2.3cm]{geometry}
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{ragged2e}
+\usepackage{needspace}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+
+% ---------- Cores ----------
+\usepackage{xcolor}
+\definecolor{bg}{HTML}{0B0F0D}
+\definecolor{panel}{HTML}{141B18}
+\definecolor{panelHi}{HTML}{1B2521}
+\definecolor{accent}{HTML}{33E086}
+\definecolor{accentDeep}{HTML}{0F5A3A}
+\definecolor{accentDim}{HTML}{1E8F5E}
+\definecolor{textcol}{HTML}{E8F0EC}
+\definecolor{muted}{HTML}{93A79D}
+\definecolor{line}{HTML}{27362F}
+\usepackage{pagecolor}
+\pagecolor{bg}
+
+% ---------- Tabelas ----------
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\arrayrulecolor{line}
+\renewcommand{\arraystretch}{1.25}
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X}
+\AtBeginEnvironment{tabularx}{\singlespacing}
+
+% ---------- Caixas ----------
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% ---------- Sumário ----------
+\usepackage{tocloft}
+\renewcommand{\contentsname}{Conteúdo}
+\setcounter{tocdepth}{1}
+\renewcommand{\cfttoctitlefont}{\displayfont\Huge\bfseries\color{accent}}
+\renewcommand{\cftsecfont}{\displayfont\bfseries\color{textcol}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{accent}}
+\renewcommand{\cftsecleader}{\color{line}\cftdotfill{\cftsecdotsep}}
+\setlength{\cftbeforesecskip}{5pt}
+
+% ---------- Rodapé ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{muted}%
+  Anatomia da Proposta Técnico-Comercial de IA/ML\quad\textcolor{line}{\textbar}\quad
+  \textcolor{accent}{\thepage}}
+
+% ---------- Links ----------
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent,
+  linktoc=all, breaklinks=true,
+  pdftitle={Anatomia da Proposta Técnico-Comercial de IA/ML},
+  pdfauthor={Tony Esaú de Oliveira}
+}
+\usepackage{xurl}
+
+% ---------- Listas ----------
+\newcommand{\sqbul}{\textcolor{accent}{\raisebox{0.12ex}{\rule{0.42em}{0.42em}}}}
+\setlist[itemize,1]{leftmargin=1.35em,itemsep=2.5pt,topsep=3pt,parsep=0pt,label=\sqbul}
+\setlist[itemize,2]{leftmargin=1.2em,itemsep=1.5pt,topsep=2pt,label=\textcolor{accentDim}{\textbullet}}
+\setlist[enumerate,1]{leftmargin=1.7em,itemsep=3pt,topsep=2pt,parsep=0pt,
+  label=\textcolor{accent}{\bfseries\arabic*.}}
+
+% ---------- Macros ----------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% Cabeçalho de "parte" da proposta (numerada, entra no sumário)
+\newcommand{\ppart}[2]{%
+  \par\needspace{5\baselineskip}\vspace{15pt}%
+  \phantomsection\addcontentsline{toc}{section}{#1.\hspace{0.4em}#2}%
+  \noindent{\displayfont\fontsize{23}{25}\selectfont\bfseries\color{accent}#1}\hspace{0.55em}%
+  {\displayfont\Large\bfseries\color{textcol}#2}\par\vspace{4pt}%
+  {\color{line}\rule{\linewidth}{0.8pt}}\par\vspace{7pt}}
+
+% Rótulo em destaque (Objetivo, O que incluir, ...)
+\newcommand{\rlabel}[1]{\par\needspace{2\baselineskip}\vspace{4pt}{\bfseries\color{accent}#1}\par\vspace{1pt}}
+
+% Linha de fontes mais usadas na parte
+\newcommand{\fontes}[1]{\par\vspace{5pt}{\footnotesize\color{muted}\textbf{Fontes mais usadas:}\ #1}\par}
+
+% Caixa de boas práticas
+\newtcolorbox{boas}{enhanced,breakable,colback=panelHi,colframe=panelHi,
+  boxrule=0pt,arc=3pt,left=12pt,right=12pt,top=9pt,bottom=9pt,
+  borderline west={3pt}{0pt}{accent},
+  before upper={\bfseries\color{accent}Boas práticas para IA/ML\par\vspace{3pt}\normalfont\color{textcol}}}
+
+% Caixa de erros a evitar
+\newtcolorbox{evitar}{enhanced,breakable,colback=panel,colframe=panel,
+  boxrule=0pt,arc=3pt,left=12pt,right=12pt,top=9pt,bottom=9pt,
+  borderline west={3pt}{0pt}{accentDim},
+  before upper={\bfseries\color{accentDim}Erros comuns a evitar\par\vspace{3pt}\normalfont\color{textcol}}}
+
+% Cabeçalho de grupo de referências
+\newcommand{\refsec}[1]{%
+  \par\needspace{3\baselineskip}\vspace{13pt}%
+  {\displayfont\large\bfseries\color{accent}#1}\par\vspace{2pt}%
+  {\color{line}\rule{\linewidth}{0.6pt}}\par\vspace{5pt}}
+
+% Uma referência
+\newcommand{\refitem}[2]{%
+  \par\needspace{2.5\baselineskip}\hangindent=1.4em\hangafter=1 #1\par
+  \nobreak{\color{muted}\itshape #2}\par\vspace{9pt}}
+
+\begin{document}
+\color{textcol}
+\tolerance=2400
+\emergencystretch=2.2em
+\sloppy
+
+% =====================================================
+% CAPA
+% =====================================================
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.4cm}
+
+{\setlength{\fboxsep}{0pt}\colorbox{accent}{\rule{1.1cm}{1.1cm}}}
+
+\vspace{0.9cm}
+
+{\displayfont\Large\bfseries\color{accent}\addfontfeatures{LetterSpace=8.0}GUIA DE REFERÊNCIA}
+
+\vspace{0.7cm}
+
+{\color{line}\rule{0.55\linewidth}{0.8pt}}
+
+\vspace{0.7cm}
+
+{\displayfont\fontsize{34}{40}\selectfont\bfseries\color{textcol}Anatomia da Proposta\\[6pt] \textcolor{accent}{Técnico-Comercial}}
+
+\vspace{0.5cm}
+
+{\displayfont\Large\color{accent}Soluções de Inteligência Artificial e Machine Learning}
+
+\vspace{0.7cm}
+
+{\color{line}\rule{0.55\linewidth}{0.8pt}}
+
+\vspace{1.0cm}
+
+\begin{tcolorbox}[enhanced,width=0.9\linewidth,colback=panel,colframe=line,
+  boxrule=0.8pt,arc=4pt,left=18pt,right=18pt,top=14pt,bottom=14pt,
+  borderline west={3pt}{0pt}{accent}]
+  {\bfseries\color{accent}O que é este documento}\par
+  \vspace{5pt}
+  \color{textcol}Referência que detalha, parte por parte, o que uma proposta técnico-comercial de IA/ML deve conter, da capa às referências. Não é uma proposta pronta, e sim um guia de especificações, boas práticas e erros a evitar, com as fontes usadas em cada parte.
+\end{tcolorbox}
+
+\vfill
+{\footnotesize\color{muted}Material de estudo \textcolor{line}{\textbar}\ Residência em Software \textcolor{line}{\textbar}\ PPI Softex/SiDi}
+\vspace{0.6cm}
+\end{center}
+
+\clearpage
+
+% =====================================================
+% SUMÁRIO
+% =====================================================
+{\hypersetup{linkcolor=textcol}\tableofcontents}
+\clearpage
+
+% =====================================================
+% COMO USAR
+% =====================================================
+\noindent{\displayfont\Large\bfseries\color{accent}Como usar este documento}\par
+\vspace{4pt}{\color{line}\rule{\linewidth}{0.6pt}}\par\vspace{7pt}
+
+Cada parte a seguir corresponde a uma seção de uma proposta técnico-comercial de IA/ML, apresentada na ordem em que normalmente aparece no documento final. Para cada parte, você encontra o objetivo, o que incluir com as especificações, uma caixa de boas práticas específicas de IA/ML, uma caixa de erros comuns a evitar e as fontes mais usadas naquela parte. Ao final, a seção de Referências reúne as fontes completas, agrupadas pela parte em que cada uma foi mais utilizada. Use este material como uma lista de verificação ao montar propostas, adaptando a profundidade de cada seção ao tamanho do projeto e ao perfil de quem vai ler.
+
+% =====================================================
+% PARTES
+% =====================================================
+\ppart{01}{Capa}
+\rlabel{Objetivo}
+Identificar a proposta e transmitir profissionalismo em poucos segundos, deixando claro para quem é o documento e sobre o que ele trata.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Título do projeto orientado ao resultado do cliente, não ao seu produto;
+  \item Nome do cliente e do fornecedor;
+  \item Data e número de versão da proposta;
+  \item Identificação de confidencialidade, quando aplicável;
+  \item Contato do responsável pela proposta;
+  \item Identidade visual limpa e consistente com o restante do documento.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Personalize o título e cite o nome do cliente; capa genérica sinaliza proposta genérica;
+  \item Mantenha data e versão visíveis para controle de revisões;
+  \item Deixe o visual sóbrio e legível, sem excesso de elementos.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Capa sem o nome do cliente ou sem data e versão;
+  \item Excesso de jargão técnico logo na abertura.
+\end{itemize}
+\end{evitar}
+\fontes{[ProposalKit], [AutoRFP]}
+
+\ppart{02}{Sumário Executivo}
+\rlabel{Objetivo}
+Resumir, para quem decide e muitas vezes não é técnico, o problema, a solução e o valor, de forma autossuficiente. É a seção mais lida, então deve funcionar sozinha.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item O problema do cliente em uma ou duas frases;
+  \item A solução proposta em alto nível;
+  \item O resultado esperado e a métrica principal de sucesso;
+  \item Investimento e prazo em faixa, para dar ordem de grandeza;
+  \item Um chamado à ação claro para o próximo passo.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Escreva por último e posicione primeiro; foque em resultado de negócio;
+  \item Garanta que o texto seja compreensível sem ler o resto da proposta;
+  \item Traduza a técnica em benefício, sem jargão.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Começar pela tecnologia em vez do problema do cliente;
+  \item Escrever para o leitor técnico quando quem decide é o negócio;
+  \item Prometer acurácia garantida.
+\end{itemize}
+\end{evitar}
+\fontes{[Aviy], [AutoRFP], [Cobrief]}
+
+\ppart{03}{Entendimento do Problema e Contexto}
+\rlabel{Objetivo}
+Mostrar que você entende o negócio do cliente melhor do que qualquer concorrente, conectando o problema à estratégia dele.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Contexto do cliente e as dores atuais;
+  \item Impacto do problema no negócio, com dimensionamento quando possível;
+  \item Stakeholders e decisores envolvidos;
+  \item Restrições conhecidas (orçamento, prazo, sistemas, dados);
+  \item Por que agora, ou seja, o que torna o momento oportuno.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Lidere pela dor do cliente antes de falar de você;
+  \item Use dados do setor para dimensionar a oportunidade;
+  \item Conecte o problema aos objetivos estratégicos do cliente.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Falar da sua empresa antes de falar do cliente;
+  \item Apresentar suposições não validadas como se fossem fatos.
+\end{itemize}
+\end{evitar}
+\fontes{[Aviy], [Prediction Machines], [McKinsey], [AI Index], [Enterprise AI Playbook]}
+
+\ppart{04}{Objetivos e Critérios de Sucesso}
+\rlabel{Objetivo}
+Definir, de forma mensurável, o que é sucesso, tanto no negócio quanto no técnico. É a base que sustenta escopo, preço e aceite.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Objetivo de negócio, específico e datado (por exemplo, reduzir o churn em um percentual em um horizonte);
+  \item Critério de sucesso de negócio, com a métrica que comprova o resultado;
+  \item Critério de sucesso técnico do ML (por exemplo, métrica alvo e limiar aceitável);
+  \item Horizonte de medição e forma de verificação;
+  \item Baseline atual, medido antes do projeto.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Alinhe o critério técnico ao objetivo de negócio, não ao contrário;
+  \item Estabeleça o baseline antes de começar, senão não há como provar melhoria;
+  \item Separe claramente o que é hipótese do que é compromisso contratual.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Prometer uma acurácia específica antes de ver os dados;
+  \item Medir apenas a métrica técnica, desconectada do negócio;
+  \item Iniciar sem baseline.
+\end{itemize}
+\end{evitar}
+\fontes{[CRISP-ML(Q)], [DataSciencePM], [nexocode]}
+
+\ppart{05}{Solução Proposta e Abordagem Técnica}
+\rlabel{Objetivo}
+Descrever o que o cliente vai receber e como você vai construir, traduzindo cada escolha técnica em resultado de negócio.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Visão da solução, ou seja, o que o cliente terá em mãos ao final;
+  \item Arquitetura em alto nível e integração com os sistemas do cliente;
+  \item Abordagem de modelagem, com as alternativas consideradas e a escolhida;
+  \item Decisão entre construir, contratar ou usar foundation models, quando couber;
+  \item Experiência de entrega e de uso (dashboard, API, copiloto), com foco em confiança e explicabilidade.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Traduza cada decisão técnica em benefício para o cliente;
+  \item Comece por um baseline simples antes de propor algo sofisticado;
+  \item Leve o jargão pesado para um anexo técnico.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Overengineering, propor o modelo mais complexo por status;
+  \item Arquitetura sem ligação clara com o problema;
+  \item Prometer sofisticação sem provar valor primeiro.
+\end{itemize}
+\end{evitar}
+\fontes{[Aviy], [ProposalKit], [Huyen 2022], [Huyen 2025], [PAIR]}
+
+\ppart{06}{Requisitos e Governança de Dados}
+\rlabel{Objetivo}
+Deixar explícito de quais dados o projeto depende. Em ML, os dados são o maior risco e o maior consumidor de esforço, então essa parte protege as duas partes.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Fontes de dados necessárias e onde vivem;
+  \item Volume, histórico e frequência de atualização;
+  \item Qualidade esperada e responsabilidade por ela;
+  \item Acesso, credenciais e ambiente de trabalho;
+  \item Privacidade e base legal (LGPD), propriedade e retenção dos dados.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Trate o acesso a dados como premissa e dependência explícita;
+  \item Reserve uma fatia grande do esforço para preparação de dados, algo entre 40 e 60\%;
+  \item Combine, por escrito, de quem é a responsabilidade pela qualidade dos dados.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Assumir que os dados já estão prontos e limpos;
+  \item Ignorar a base legal do uso dos dados;
+  \item Subestimar o trabalho de limpeza e integração.
+\end{itemize}
+\end{evitar}
+\fontes{[CRISP-ML(Q)], [Sculley 2015], [Huyen 2022], [NMS SOW]}
+
+\ppart{07}{Escopo}
+\rlabel{Objetivo}
+Delimitar com precisão o que será e o que não será feito, para evitar o escopo inchado que corrói prazo e margem.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Itens dentro do escopo, organizados por frente de trabalho;
+  \item Itens explicitamente fora do escopo;
+  \item Premissas que sustentam o escopo;
+  \item Dependências e insumos que o cliente precisa fornecer;
+  \item Processo de mudança de escopo (change request).
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Liste o fora do escopo com o mesmo cuidado do dentro do escopo;
+  \item Use linguagem de ação e quebre tarefas complexas;
+  \item Conecte o escopo diretamente ao preço.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Escopo vago que abre espaço para interpretações;
+  \item Deixar as exclusões implícitas;
+  \item Não ter um processo definido para mudanças.
+\end{itemize}
+\end{evitar}
+\fontes{[NMS SOW], [nexocode], [AutoRFP]}
+
+\ppart{08}{Metodologia e Fases do Projeto}
+\rlabel{Objetivo}
+Mostrar um processo confiável e adequado à incerteza do ML, dando previsibilidade sem esconder a natureza iterativa do trabalho.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item O nome do framework citado uma vez (por exemplo, CRISP-ML(Q));
+  \item As seis fases traduzidas em marcos e entregáveis, não em tarefas acadêmicas;
+  \item Engajamento em fases, com uma etapa curta de descoberta e viabilidade antes de fechar o restante;
+  \item Pontos de decisão go/no-go entre as fases.
+\end{itemize}
+
+O quadro a seguir mostra como as fases do CRISP-ML(Q) se traduzem em seções da proposta, que é a forma recomendada de citar a metodologia sem despejar jargão.
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries\RaggedRight\arraybackslash}p{5.2cm} L@{}}
+\rowcolor{accentDeep}\textcolor{white}{Fase do CRISP-ML(Q)} & \textbf{\textcolor{white}{Onde aparece na proposta}}\\
+Entendimento de negócio e dados & \normalfont Sumário executivo, entendimento do problema, objetivos e critérios, requisitos de dados.\\
+\rowcolor{panel}Preparação de dados & \normalfont Escopo, cronograma (fatia grande do esforço), premissas de acesso a dados.\\
+Modelagem & \normalfont Abordagem técnica e entregáveis (baseline e modelo).\\
+\rowcolor{panel}Avaliação & \normalfont Critérios de aceite, métricas e KPIs.\\
+Deploy & \normalfont Entregáveis, cronograma e integração.\\
+\rowcolor{panel}Monitoramento e manutenção & \normalfont Operação (MLOps), garantias e condições comerciais recorrentes.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{boas}
+\begin{itemize}
+  \item Combine uma implementação leve do CRISP com gestão ágil;
+  \item Coloque uma fase curta de descoberta e viabilidade antes de fechar escopo e preço;
+  \item Deixe explícita a iteração entre modelagem e avaliação.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Recitar as tarefas acadêmicas de cada fase no corpo da proposta;
+  \item Um contrato único de escopo fechado que ignora a incerteza do ML;
+  \item Jargão de metodologia no sumário executivo.
+\end{itemize}
+\end{evitar}
+\fontes{[CRISP-ML(Q)], [DataSciencePM], [CD4ML], [Google Cloud MLOps]}
+
+\ppart{09}{Entregáveis e Critérios de Aceite}
+\rlabel{Objetivo}
+Listar as saídas tangíveis do projeto e definir como cada uma será considerada aceita, eliminando ambiguidade no fechamento.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Cada entregável com seu formato (modelo, código, documentação, relatório de avaliação, dashboard);
+  \item Critério de aceite mensurável para cada entregável;
+  \item Quem aprova e em quanto tempo;
+  \item Distinção clara entre protótipo e versão de produção.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Todo entregável precisa de um critério de aceite verificável;
+  \item Inclua documentação e relatório de avaliação como entregáveis, não só o modelo;
+  \item Defina o que significa concluído para cada item.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Entregável sem critério de aceite;
+  \item Usar expressões como modelo funcionando sem definir o que é funcionar.
+\end{itemize}
+\end{evitar}
+\fontes{[NMS SOW], [AutoRFP], [Cobrief], [nexocode]}
+
+\ppart{10}{Cronograma e Marcos}
+\rlabel{Objetivo}
+Mostrar o prazo por fase e os marcos que comprovam progresso, criando um ritmo verificável para o projeto.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Fases com duração, entradas, saídas e dependências;
+  \item Marcos e pontos de decisão;
+  \item Cadência de acompanhamento (por exemplo, semanal);
+  \item Premissas que sustentam os prazos.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Estruture os prazos pelas fases do CRISP-ML(Q);
+  \item Amarre cada marco a um entregável concreto;
+  \item Reserve tempo realista para preparação de dados.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Cronograma sem dependências entre fases;
+  \item Prometer uma data única sem faseamento;
+  \item Subestimar o tempo de dados.
+\end{itemize}
+\end{evitar}
+\fontes{[AutoRFP], [Cobrief], [CRISP-ML(Q)]}
+
+\ppart{11}{Equipe e Estimativa de Esforço}
+\rlabel{Objetivo}
+Mostrar quem executa e como o esforço e o preço foram estimados, dando credibilidade aos números.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Papéis envolvidos (engenharia de dados, engenharia de ML e ciência de dados, MLOps, produto e UX, segurança e jurídico);
+  \item Alocação por fase;
+  \item Técnica de estimativa usada (paramétrica, PERT, pontos de função);
+  \item Margem de risco aplicada.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Estime por fase, lembrando que dados costumam representar de 40 a 60\% do esforço;
+  \item Use PERT quando houver incerteza alta;
+  \item Considere a produtividade real, menor que oito horas efetivas por dia.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Estimar apenas o treino do modelo;
+  \item Uma equipe sem MLOps nem governança;
+  \item Não aplicar margem de risco.
+\end{itemize}
+\end{evitar}
+\fontes{[CRISP-ML(Q)], [Infodiagram]}
+
+\ppart{12}{Riscos e Dependências}
+\rlabel{Objetivo}
+Antecipar o que pode dar errado e transformar isso em premissas, ressalvas e margem, de forma honesta.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Riscos de dados (insuficiência, qualidade, viés);
+  \item Risco de drift e degradação do modelo ao longo do tempo;
+  \item Dependências do cliente (acesso, aprovações, disponibilidade);
+  \item Riscos legais e éticos;
+  \item Plano de mitigação para cada risco relevante.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Derive os riscos das próprias fases do CRISP-ML(Q);
+  \item Use os anti-padrões de dívida técnica de ML como checklist;
+  \item Transforme cada risco em cláusula, premissa ou margem.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Omitir riscos para parecer mais competitivo;
+  \item Prometer resultados sem ressalvas;
+  \item Ignorar a manutenção e a dívida técnica futuras.
+\end{itemize}
+\end{evitar}
+\fontes{[NMS SOW], [CRISP-ML(Q)], [Sculley 2015], [ProposalKit]}
+
+\ppart{13}{Métricas, KPIs e ROI}
+\rlabel{Objetivo}
+Ligar a solução a valor mensurável para o negócio, mostrando como o retorno será acompanhado.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item KPIs financeiros (redução de custo, receita, ROI, payback);
+  \item KPIs operacionais (tempo de ciclo, taxa de automação, taxa de erro);
+  \item KPIs de modelo ligados a impacto financeiro, não só à acurácia;
+  \item Horizonte de realização do valor, que em IA costuma ser gradual.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Conecte cada métrica de modelo a um impacto de negócio em dinheiro;
+  \item Defina o baseline para tornar o ROI verificável;
+  \item Atribua um dono para cada KPI.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Medir acurácia em vez de impacto;
+  \item Prometer ROI sem baseline;
+  \item KPIs sem responsável definido.
+\end{itemize}
+\end{evitar}
+\fontes{[Softermii], [Worklytics], [Agility at Scale]}
+
+\ppart{14}{Operação: Monitoramento e Manutenção}
+\rlabel{Objetivo}
+Tratar a IA como um sistema vivo. Essa parte sustenta tecnicamente o modelo comercial recorrente e evita a degradação silenciosa do modelo.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Monitoramento de desempenho e de drift;
+  \item Retreino e versionamento de dados e modelos;
+  \item SLAs e modelo de suporte;
+  \item Pipelines de CI/CD e treino contínuo;
+  \item Plano de rollback quando uma atualização falha.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Inclua monitoramento e retreino dentro do escopo e do preço;
+  \item Use MLOps para evitar que o modelo degrade sem ninguém perceber;
+  \item Ligue essa operação à condição comercial recorrente.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Tratar IA como algo de entregar e esquecer;
+  \item Entregar sem monitoramento;
+  \item Não versionar dados e modelos.
+\end{itemize}
+\end{evitar}
+\fontes{[Google Cloud MLOps], [CD4ML], [Sculley 2015], [Huyen 2022]}
+
+\ppart{15}{Governança, Ética, Segurança e Conformidade}
+\rlabel{Objetivo}
+Mostrar que a solução é responsável, segura e auditável, o que é cada vez mais um critério de compra.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Gestão de risco de IA, apoiada em um framework como o NIST AI RMF;
+  \item Sistema de gestão de IA, alinhado a uma norma como a ISO/IEC 42001;
+  \item Enquadramento regulatório (LGPD, AI Act) e a classificação de risco do sistema;
+  \item Segurança e privacidade dos dados e do modelo;
+  \item Explicabilidade e supervisão humana onde fizer sentido.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Dimensione os controles de forma proporcional ao risco do caso;
+  \item Documente decisões e mantenha trilha de auditoria;
+  \item Ofereça explicabilidade adequada ao usuário final.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Ignorar a base legal e a classificação de risco;
+  \item Tratar segurança como um anexo esquecido;
+  \item Prometer conformidade sem um processo por trás.
+\end{itemize}
+\end{evitar}
+\fontes{[NIST AI RMF], [ISO 42001], [AI Act], [PAIR]}
+
+\ppart{16}{Investimento e Condições Comerciais}
+\rlabel{Objetivo}
+Deixar preço e condições cristalinos e ligados a marcos, de forma que o cliente entenda pelo que está pagando e quando.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Modelo de cobrança (fixo por fase, por resultado, assinatura ou AIaaS);
+  \item Tabela de preços por elemento do projeto;
+  \item Condições de pagamento amarradas a marcos e entregáveis;
+  \item Validade da proposta e regras de reajuste e recorrência.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Amarre o faturamento a marcos e entregáveis verificáveis;
+  \item Ofereça a fase de descoberta com preço próprio, separada da execução;
+  \item Deixe a recorrência de monitoramento explícita no preço.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Um preço único e opaco;
+  \item Condições de pagamento confusas;
+  \item Misturar descoberta e execução num único valor fechado.
+\end{itemize}
+\end{evitar}
+\fontes{[Aviy], [Infodiagram], [NMS SOW]}
+
+\ppart{17}{Credibilidade e Prova}
+\rlabel{Objetivo}
+Construir a confiança de que você entrega, com evidências concretas e não com afirmações genéricas.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Cases e resultados nomeados e verificáveis;
+  \item Equipe e experiência relevante;
+  \item Depoimentos e referências de clientes;
+  \item Certificações e parcerias, quando pertinentes.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Use prova específica, com número e resultado, não claim genérico;
+  \item Conecte o case ao problema do cliente atual.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Afirmações vagas sem evidência;
+  \item Uma seção só sobre você, desconectada do cliente.
+\end{itemize}
+\end{evitar}
+\fontes{[AutoRFP], [Aviy], [Infodiagram]}
+
+\ppart{18}{Próximos Passos, Validade e Anexos}
+\rlabel{Objetivo}
+Facilitar o sim e conectar a proposta ao contrato, reduzindo o atrito para avançar.
+
+\rlabel{O que incluir}
+\begin{itemize}
+  \item Um próximo passo simples (por exemplo, alinhar objetivos ou liberar uma amostra de dados);
+  \item Validade da proposta;
+  \item Anexos: SOW e contrato (MSA), arquitetura, plano de dados e glossário técnico.
+\end{itemize}
+
+\begin{boas}
+\begin{itemize}
+  \item Termine com momentum e um passo fácil de dar;
+  \item Ligue os marcos da proposta ao SOW e ao contrato;
+  \item Leve o detalhe técnico pesado para os anexos.
+\end{itemize}
+\end{boas}
+
+\begin{evitar}
+\begin{itemize}
+  \item Encerrar sem chamada à ação;
+  \item Deixar a proposta solta do contrato;
+  \item Não informar a validade.
+\end{itemize}
+\end{evitar}
+\fontes{[Cobrief], [Aviy], [NMS SOW], [AutoRFP]}
+
+% =====================================================
+% REFERÊNCIAS
+% =====================================================
+\clearpage
+\phantomsection\addcontentsline{toc}{section}{Referências}
+\noindent{\displayfont\Huge\bfseries\color{accent}Referências}\par
+\vspace{4pt}{\color{line}\rule{\linewidth}{0.7pt}}\par\vspace{4pt}
+As fontes abaixo estão agrupadas pela parte da proposta em que cada uma foi mais utilizada. As chaves entre colchetes são as mesmas citadas em Fontes mais usadas ao longo do documento.
+
+\refsec{Estrutura e redação da proposta (partes 01, 02, 09, 10, 17, 18)}
+
+\refitem{[Aviy] AVIY. \textbf{``AI Consulting Proposal Template''}. Aviy, 2026. Disponível em: \url{https://aviy.ai/blog/ai-consulting-proposal-template}.}{Estrutura de proposta de consultoria em IA orientada a resultado, com faseamento para reduzir risco e ligação entre marcos e faturamento.}
+
+\refitem{[ProposalKit] PROPOSAL KIT. \textbf{``How to Write an AI Project Proposal''}. Proposal Kit, 2026. Disponível em: \url{https://www.proposalkit.com/htm/how-to-write-an-ai-project-proposal.htm}.}{Aponta as seções próprias de projetos de IA, como imprevisibilidade, monitoramento contínuo e questões legais e éticas.}
+
+\refitem{[AutoRFP] AUTORFP. \textbf{``Technical Proposal: How to Write One That Wins''}. AutoRFP.ai, 2026. Disponível em: \url{https://autorfp.ai/blog/technical-proposal}.}{Estrutura geral de uma proposta técnica, incluindo abordagem técnica, entregáveis, gestão de risco, governança e marcos.}
+
+\refitem{[Cobrief] COBRIEF. \textbf{``Machine Learning Prototype Proposal (Template)''}. Cobrief, 2025. Disponível em: \url{https://www.cobrief.app/resources/business-proposal-templates/machine-learning-prototype-proposal-free-template/}.}{Modelo de proposta de protótipo de ML, com foco em derriscar antes de escalar e em explicar tradeoffs em linguagem simples.}
+
+\refitem{[Infodiagram] INFODIAGRAM. \textbf{``How to Present an AI Project Proposal''}. Infodiagram, 2024. Disponível em: \url{https://blog.infodiagram.com/2024/08/how-present-ai-project-proposal-powerpoint.html}.}{Estrutura do pitch de um projeto de IA, com visão da metodologia de ML e uma tabela de custos por elemento do projeto.}
+
+\refsec{Escopo, SOW e dados (partes 06, 07, 12)}
+
+\refitem{[NMS SOW] NMS CONSULTING. \textbf{``Consulting SOW Template: Scope, Deliverables, KPIs and Exit Criteria''}. NMS Consulting, 2025. Disponível em: \url{https://nmsconsulting.com/consulting-sow-template/}.}{Modelo de Statement of Work com escopo dentro e fora, premissas, dependências de dados, critérios de aceite e opção de saída após o primeiro sprint.}
+
+\refitem{[nexocode] NEXOCODE. \textbf{``AI Project Scoping: How to Define the Scope of an ML Project''}. Nexocode, 2022. Disponível em: \url{https://nexocode.com/blog/posts/ai-project-scoping-how-to-define-the-scope-of-ml-project/}.}{Como definir escopo, entregáveis e KPIs de um projeto de ML alinhados ao objetivo de negócio.}
+
+\refsec{Metodologia e ciclo de vida de ML (partes 04, 05, 08, 14)}
+
+\refitem{[CRISP-ML(Q)] STUDER, S.; BUI, T. B.; DRESCHER, C.; HANUSCHKIN, A.; WINKLER, L.; PETERS, S.; MÜLLER, K.-R. \textbf{``Towards CRISP-ML(Q): A Machine Learning Process Model with Quality Assurance Methodology''}. Machine Learning and Knowledge Extraction, v. 3, n. 2, p. 392--413, 2021. DOI: \url{https://doi.org/10.3390/make3020020}.}{Modelo de processo em seis fases com garantia de qualidade e gestão de risco, base para a seção de metodologia e para os riscos da proposta.}
+
+\refitem{[DataSciencePM] DATA SCIENCE PM. \textbf{``What is CRISP-DM?''}. Data Science PM, 2024. Disponível em: \url{https://www.datascience-pm.com/crisp-dm-2/}.}{Explica como aplicar o CRISP de forma leve, combinando com gestão ágil, e como a fase de entendimento de negócio define os critérios de sucesso.}
+
+\refitem{[CD4ML] SATO, Danilo; WIDER, Arif; WINDHEUSER, Christoph. \textbf{``Continuous Delivery for Machine Learning''}. martinfowler.com, 2019. Disponível em: \url{https://martinfowler.com/articles/cd4ml.html}.}{Como versionar dados, modelos e código e automatizar o pipeline do treino ao deploy, base para a parte de operação.}
+
+\refitem{[Google Cloud MLOps] GOOGLE CLOUD. \textbf{``MLOps: Continuous Delivery and Automation Pipelines in Machine Learning''}. Disponível em: \url{https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning}.}{Níveis de maturidade de MLOps e como montar CI/CD, treino contínuo e monitoramento em produção.}
+
+\refitem{[Sculley 2015] SCULLEY, D. \textit{et al}. \textbf{``Hidden Technical Debt in Machine Learning Systems''}. NeurIPS, v. 28, p. 2503--2511, 2015.}{Artigo seminal sobre o custo de manutenção oculto de sistemas de ML, útil como checklist de riscos e de dívida técnica.}
+
+\refsec{Engenharia de sistemas de ML (partes 05, 06, 14)}
+
+\refitem{[Huyen 2022] HUYEN, Chip. \textbf{``Designing Machine Learning Systems''}. O'Reilly Media, 2022.}{Projeto de sistemas de ML de ponta a ponta para produção, cobrindo dados, treino, avaliação, deploy e monitoramento.}
+
+\refitem{[Huyen 2025] HUYEN, Chip. \textbf{``AI Engineering: Building Applications with Foundation Models''}. O'Reilly Media, 2025.}{Construção de aplicações sobre foundation models e LLMs, com avaliação, RAG, fine-tuning e otimização de inferência.}
+
+\refsec{Produto e experiência de IA (partes 05, 15)}
+
+\refitem{[PAIR] GOOGLE PAIR. \textbf{``People + AI Guidebook''}. Google, 2019. Disponível em: \url{https://pair.withgoogle.com/guidebook}.}{Boas práticas para desenhar produtos de IA centrados no usuário, com foco em confiança, explicabilidade e tratamento de erros.}
+
+\refsec{Métricas, KPIs e ROI (parte 13)}
+
+\refitem{[Softermii] VANIUKOV, Slava. \textbf{``How to Measure ROI from AI Projects: KPIs, Frameworks \& Templates''}. Softermii, 2026. Disponível em: \url{https://softermii.com/blog/artificial-intelligence/how-to-measure-roi-from-ai-projects-kpis-frameworks-and-templates}.}{Fórmula de ROI adaptada a IA, categorias de valor, KPIs financeiros e operacionais e templates de cálculo.}
+
+\refitem{[Worklytics] WORKLYTICS. \textbf{``Proving ROI on AI Adoption: Metrics and Dashboards''}. Worklytics, 2025. Disponível em: \url{https://www.worklytics.co/resources/proving-roi-ai-adoption-metrics-dashboards-2025}.}{Métricas e dashboards para provar o retorno da adoção de IA ao longo do tempo.}
+
+\refitem{[Agility at Scale] AGILITY AT SCALE. \textbf{``AI Business Impact Metrics''}. Disponível em: \url{https://agility-at-scale.com/ai/strategy/ai-business-impact-metrics/}.}{Conjunto de métricas de impacto de negócio para estratégia de IA.}
+
+\refsec{Governança, ética e risco (parte 15)}
+
+\refitem{[NIST AI RMF] NIST. \textbf{``Artificial Intelligence Risk Management Framework (AI RMF 1.0)''}. National Institute of Standards and Technology, 2023. Disponível em: \url{https://www.nist.gov/itl/ai-risk-management-framework}.}{Framework de risco em quatro funções, Governar, Mapear, Medir e Gerenciar, ao longo do ciclo de vida da IA.}
+
+\refitem{[ISO 42001] ISO/IEC. \textbf{``ISO/IEC 42001:2023: Sistema de Gestão de Inteligência Artificial''}. International Organization for Standardization, 2023. Disponível em: \url{https://www.iso.org/standard/42001}.}{Primeira norma internacional de sistema de gestão de IA, com requisitos para uso responsável e auditável.}
+
+\refitem{[AI Act] PARLAMENTO EUROPEU; CONSELHO DA UNIÃO EUROPEIA. \textbf{``Regulamento (UE) 2024/1689 (AI Act)''}. 2024. Disponível em: \url{https://artificialintelligenceact.eu}.}{Marco regulatório abrangente de IA, com abordagem baseada em risco e obrigações proporcionais.}
+
+\refsec{Contexto e estratégia de IA (parte 03)}
+
+\refitem{[Prediction Machines] AGRAWAL, Ajay; GANS, Joshua; GOLDFARB, Avi. \textbf{``Prediction Machines: The Simple Economics of Artificial Intelligence''}. Harvard Business Review Press, 2018.}{Enquadra a IA como queda no custo da previsão, útil para dimensionar onde ela gera valor no negócio do cliente.}
+
+\refitem{[McKinsey] MCKINSEY \& COMPANY (QuantumBlack). \textbf{``The State of AI''}. 2025. Disponível em: \url{https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai}.}{Pesquisa anual de adoção de IA nas empresas, com dados sobre onde o valor aparece.}
+
+\refitem{[AI Index] STANFORD HAI. \textbf{``The AI Index Report 2025''}. Stanford Institute for Human-Centered AI, 2025. Disponível em: \url{https://hai.stanford.edu/ai-index/2025-ai-index-report}.}{Relatório anual com dados de pesquisa, economia, adoção e política de IA, boa fonte de números para o contexto.}
+
+\refitem{[Enterprise AI Playbook] PEREIRA, Elisa; GRAYLIN, Alvin Wang; BRYNJOLFSSON, Erik. \textbf{``The Enterprise AI Playbook: Lessons from 51 Successful Deployments''}. Stanford Digital Economy Lab, 2026. Disponível em: \url{https://digitaleconomy.stanford.edu}.}{Lições de 51 implantações reais, com ênfase em processo, patrocínio e governança sobre a tecnologia.}
+
+\end{document}
