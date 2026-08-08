@@ -10,6 +10,7 @@ O conteúdo tem origem no roteiro de estudos da disciplina "Realidade de Empresa
 
 - `Roteiro_Estudos_Realidade_Empresas_IA.pdf`, o roteiro de estudos completo, com tema, figuras e referências;
 - `fonte/`, os arquivos LaTeX que geram o PDF (código-fonte editável);
+- `Pratica_Proposta`, uma proposta Técnico-Comercial como produto dos estudos relacionados à Realidade de Empresas de Inteligência Artificial;
 - `Referencias.pdf`, um arquivo pdf com ótimas referências sobre o assunto do roteiro e relacionados;
 - `README.md`, este arquivo, que serve de índice e de curadoria de leituras.
 
